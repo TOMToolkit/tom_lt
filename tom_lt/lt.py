@@ -299,7 +299,7 @@ class LTFacility(GenericObservationFacility):
     def get_terminal_observing_states(self):
         return ['IN_PROGRESS', 'COMPLETED']
 
-    def get_observing_sites(self, observation_id):
+    def get_observing_sites(self):
         return self.SITES
 
     def get_observation_status(self, observation_id):
