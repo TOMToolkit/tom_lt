@@ -17,49 +17,11 @@ from crispy_forms.bootstrap import PrependedAppendedText, PrependedText, InlineR
 from tom_observations.facility import GenericObservationForm, GenericObservationFacility
 from tom_targets.models import Target
 
+
 """
 TOM Toolkit LT Module, Version 0.3.0
 
-For required steps to use this module please see https://github.com/TOMToolkit/tom_lt/blob/master/README.md
-
-This Module allows submission of an observation to the Liverpool Telescope PhaseII database,
-using an RTML (Remote Telescope Markup Language) payload which is sent directly to the Liverpool
-Telescope
-
-Currently supported instruments are;
-- IO:O
-- IO:I
-- SPRAT
-- FRODOspec
-
-The Current feature set is;
-- Setting a Window using Flexible time constraint
-- Control of all observing constraints (Airmass, Seeing, SkyBrightness)
-- Multiband photometry with full IO:O filter set
-- Automatic Autoguider usage setting based on exposure time
-- Automatic Target Acquisition for SPRAT and FRODOspec instruments
-- Paralactic Angled slit orientation for SPRAT
-- Automantic Xe Arc calibration frame for SPRAT
-
-
-Not supported at present are more advanced observation features and sequences which are available through
-the PhaseII tool, such as;
-- Advanced Time constraints (Monitor, Phased, Min. Interval, Fixed)
-- Control of Autoguider options
-- Performing multiple instrument observations in one scheduled Group
-- Defocussing or manual dither / offset patterns
-- Manual Cassegrain rotation to achieve specific sky angles
-- More specific aquisition routines for SPRAT or FRODOspec
-
-
-The Module will be extended in the future to include further functionality within the TOM Toolkit,
-in order of planned implementation;
-- Cancelling of previously submitted observations
-- Checking of an observations status and whether dataproducts are ready
-- Ability to pull dataproducts directly into the TOMToolkit for reduction
-
-
-
+For required steps and isntructions to use this module please see https://github.com/TOMToolkit/tom_lt/blob/master/README.md
 
 """
 try:
@@ -71,11 +33,10 @@ except (ImportError, AttributeError, KeyError):
         'username': 'username',
         'password': 'password'
     }
+    LT_HOST = ''
+    LT_PORT = ''
 
-LT_HOST = '161.72.57.3'
-LT_PORT = '8080'
 LT_XML_NS = 'http://www.rtml.org/v3.1a'
-
 LT_XSI_NS = 'http://www.w3.org/2001/XMLSchema-instance'
 LT_SCHEMA_LOCATION = 'http://www.rtml.org/v3.1a http://telescope.livjm.ac.uk/rtml/RTML-nightly.xsd'
 
