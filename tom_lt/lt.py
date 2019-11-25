@@ -21,8 +21,8 @@ from tom_targets.models import Target
 """
 TOM Toolkit LT Module, Version 0.3.0
 
-For required steps and isntructions to use this module please see https://github.com/TOMToolkit/tom_lt/blob/master/README.md
-
+For required steps and isntructions to use this module please see https://github.com/TOMToolkit/tom_lt/blob
+/master/README.md
 """
 try:
     import tom_lt.secret
@@ -40,7 +40,7 @@ LT_XML_NS = 'http://www.rtml.org/v3.1a'
 LT_XSI_NS = 'http://www.w3.org/2001/XMLSchema-instance'
 LT_SCHEMA_LOCATION = 'http://www.rtml.org/v3.1a http://telescope.livjm.ac.uk/rtml/RTML-nightly.xsd'
 
-# Print RTML file and do not send to LT, used for development
+# Save RTML payload as file and do not send to LT, used for development
 DEBUG = False
 
 
@@ -503,8 +503,8 @@ class LTFacility(GenericObservationFacility):
                 return ['Error with connection to Liverpool Telescope',
                         'This could be due to incorrect credentials, or IP / Port settings',
                         'Occassionally, this could be due to the rebooting of systems at the Telescope Site',
-                        'Please retry at another time. If the problem persists please contact ltsupport_astronomer@ljmu.ac.uk']
-
+                        'Please retry at another time',
+                        'If the problem persists please contact ltsupport_astronomer@ljmu.ac.uk']
 
             response_rtml = etree.fromstring(response)
             if response_rtml.get('mode') == 'offer':
@@ -512,7 +512,8 @@ class LTFacility(GenericObservationFacility):
             elif response_rtml.get('mode') == 'reject':
                 return ['Error with RTML submission to Liverpool Telescope',
                         'This can occassionally happen due to systems rebooting at the Telescope Site',
-                        'Please retry at another time. If the problem persists please contact ltsupport_astronomer@ljmu.ac.uk']
+                        'Please retry at another time',
+                        'If the problem persists please contact ltsupport_astronomer@ljmu.ac.uk']
 
     def get_observation_url(self, observation_id):
         return ''
