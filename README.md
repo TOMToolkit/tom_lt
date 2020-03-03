@@ -54,48 +54,35 @@ Add `tom_lt.lt.LTFacility` to the `TOM_FACILITY_CLASSES` in your TOM's
 `settings.py`:
 ```python
       TOM_FACILITY_CLASSES = [
-        'tom_observations.facilities.lco.LCOFacility'
+        'tom_observations.facilities.lco.LCOFacility',
         ...
-        'tom_lt.lt.LTFacility'
+        'tom_lt.lt.LTFacility',
     ]
 ```
 
-Either directly enter the credentials for your proposal, plus the LT IP address
-and Port (see below for how to obtain) into the `tom_lt/lt.py` module;
+Include the following settings inside the `FACILITIES` dictionary inside `settings.py`:
 
 ```python
-try:
-    import tom_lt.secret
-    LT_SETTINGS = tom_lt.secret.LT_SETTINGS
-except (ImportError, AttributeError, KeyError):
-    LT_SETTINGS = {
-        'proposalIDs': (('proposal ID', 'PID1'), ('proposal ID2', 'PID2')),
-        'username': 'username',
-        'password': 'password'
-    }
-    LT_HOST = 'LT_IPAddress'
-    LT_PORT = 'LT_PortNo'
-```
-
-Or create an untracked file called `tom_lt/secret.py` in your TOM to hold the
-proposal credentials;
-
-```python
-LT_SETTINGS = {
-    'proposalIDs': (('proposalID', 'PID'), ),
-    'username': 'username',
-    'password': 'password'
-    LT_HOST = 'LT_IPAddress'
-    LT_PORT = 'LT_PortNo'
+FACILITIES = {
+   ...
+   'LT': {
+           'proposalIDs': (('ProposalID', 'Display Name'), ('ProposalID', 'Display Name')),
+           'username': '',
+           'password': '',
+           'LT_HOST': '',
+           'LT_PORT': '',
+           'DEBUG': False,
+    },
 }
 ```
 
-**Please refrain from publishing your user credentials, or the LT IP Address to
-any public github account**
-
-## Enabling of RTML access for a specifc proposal
+The proposalIDs key contains a list of proposalIds and the Display name in the TOM Toolkit LT submission form. For one proposal, use a single element list (e.g. `'proposalIDs': (('ProposalID', 'Display Name'),)`
 
 The Liverpool Telescope team will need to enable RTML access for the proposal (or proposals)
-being used. Please email ltsupport_astronomer@ljmu.ac.uk, to request this, providing details
-of the proposal. Once the proposal is enabled for RTML access, we will email you back user
+being used. Please email ltsupport_astronomer@ljmu.ac.uk, providing details
+of your active proposal. Once the proposal is enabled for RTML access, we will email you back user
 credentials and the required IP Address / Port for connection to the telescope.
+
+
+**Please refrain from publishing your user credentials, or the LT IP Address to
+any public github account**
