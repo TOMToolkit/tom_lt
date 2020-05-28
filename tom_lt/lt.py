@@ -162,7 +162,7 @@ class LTObservationForm(BaseRoboticObservationForm):
         etree.SubElement(ra, 'Seconds').text = str(c.ra.hms.s)
 
         dec = etree.SubElement(coordinates, 'Declination')
-        sign = '+' if c.dec.signed_dms.sign == '1.0' else '-'
+        sign = '+' if c.dec.signed_dms.sign == 1.0 else '-'
         etree.SubElement(dec, 'Degrees').text = sign + str(int(c.dec.signed_dms.d))
         etree.SubElement(dec, 'Arcminutes').text = str(int(c.dec.signed_dms.m))
         etree.SubElement(dec, 'Arcseconds').text = str(c.dec.signed_dms.s)
