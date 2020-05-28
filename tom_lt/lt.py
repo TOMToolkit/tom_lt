@@ -14,7 +14,7 @@ from astropy import units as u
 from crispy_forms.layout import Layout, Div, HTML
 from crispy_forms.bootstrap import PrependedAppendedText, PrependedText, InlineRadios
 
-from tom_observations.facility import GenericObservationForm, GenericObservationFacility
+from tom_observations.facility import BaseRoboticObservationForm, BaseRoboticObservationFacility
 from tom_targets.models import Target
 
 
@@ -36,7 +36,7 @@ LT_XSI_NS = 'http://www.w3.org/2001/XMLSchema-instance'
 LT_SCHEMA_LOCATION = 'http://www.rtml.org/v3.1a http://telescope.livjm.ac.uk/rtml/RTML-nightly.xsd'
 
 
-class LTObservationForm(GenericObservationForm):
+class LTObservationForm(BaseRoboticObservationForm):
     project = forms.ChoiceField(choices=LT_SETTINGS['proposalIDs'], label='Proposal')
 
     startdate = forms.CharField(label='Start Date',
@@ -66,7 +66,8 @@ class LTObservationForm(GenericObservationForm):
         self.helper.layout = Layout(
             self.common_layout,
             self.layout(),
-            self.extra_layout()
+            self.extra_layout(),
+            self.button_layout()
         )
 
     def is_valid(self):
@@ -423,7 +424,7 @@ class LT_FRODO_ObservationForm(LTObservationForm):
         return schedule
 
 
-class LTFacility(GenericObservationFacility):
+class LTFacility(BaseRoboticObservationFacility):
     name = 'LT'
     observation_types = [('IOO', 'IO:O'), ('IOI', 'IO:I'), ('SPRAT', 'SPRAT'), ('FRODO', 'FRODOSpec')]
 
