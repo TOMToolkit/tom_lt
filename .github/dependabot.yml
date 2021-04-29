@@ -1,0 +1,28 @@
+version: 2
+registries:
+  python-index-pypi-python-org-simple:
+    type: python-index
+    url: https://pypi.python.org/simple/
+    username: "${{secrets.PYTHON_INDEX_PYPI_PYTHON_ORG_SIMPLE_USERNAME}}"
+    password: "${{secrets.PYTHON_INDEX_PYPI_PYTHON_ORG_SIMPLE_PASSWORD}}"
+
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: weekly
+    time: "13:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: tomtoolkit
+    versions:
+    - 2.3.0
+    - 2.4.2
+    - 2.5.0
+    - 2.5.1
+    - 2.5.2
+    - 2.5.3
+    - 2.6.0
+    - 2.6.2
+  registries:
+  - python-index-pypi-python-org-simple
