@@ -28,7 +28,7 @@ setup(
               'liverpool-telescope'],
     packages=find_packages(),
     install_requires=[
-        'tomtoolkit==1.5.0',
+        'tomtoolkit==2.12.1',
         'suds-py3',
         'lxml',
     ],
