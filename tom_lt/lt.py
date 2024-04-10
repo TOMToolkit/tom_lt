@@ -439,6 +439,19 @@ class LTFacility(BaseRoboticObservationFacility):
     name = 'LT'
     observation_types = [('IOO', 'IO:O'), ('IOI', 'IO:I'), ('SPRAT', 'SPRAT'), ('FRODO', 'FRODOSpec')]
 
+    # observation_forms should be a dictionary
+    #  * it's .items() method is called in views.py::ObservationCreateView.get_context_data()
+    #  * the keys are the observation_types; values are the ObservationForm classes
+
+    # TODO: this (required) addition seems redudant to the get_form() method below.
+    # TODO: see how get_form() is used and if it's still required
+    observation_forms = {
+        'IOO': LT_IOO_ObservationForm,
+        'IOI': LT_IOI_ObservationForm,
+        'SPRAT': LT_SPRAT_ObservationForm,
+        'FRODO': LT_FRODO_ObservationForm
+    }
+
     SITES = {
             'La Palma': {
                 'sitecode': 'orm',  # TODO: what does this mean? and document it.
@@ -448,16 +461,39 @@ class LTFacility(BaseRoboticObservationFacility):
             }
 
     def get_form(self, observation_type):
-        if observation_type == 'IOO':
-            return LT_IOO_ObservationForm
-        elif observation_type == 'IOI':
-            return LT_IOI_ObservationForm
-        elif observation_type == 'SPRAT':
-            return LT_SPRAT_ObservationForm
-        elif observation_type == 'FRODO':
-            return LT_FRODO_ObservationForm
-        else:
-            return LT_IOO_ObservationForm
+        """
+        """
+        try:
+            return self.observation_forms[observation_type]
+        except KeyError:
+            return self.observation_forms['IOO']
+        # This is the original implementation of this method below.
+        # I've rewritten it to use the observation_forms dictionary above.
+        #
+        # if observation_type == 'IOO':
+        #     return LT_IOO_ObservationForm
+        # elif observation_type == 'IOI':
+        #     return LT_IOI_ObservationForm
+        # elif observation_type == 'SPRAT':
+        #     return LT_SPRAT_ObservationForm
+        # elif observation_type == 'FRODO':
+        #     return LT_FRODO_ObservationForm
+        # else:
+        #     return LT_IOO_ObservationForm
+
+    def get_facility_context_data(self, **kwargs):
+        """Provide Facility-specific data to context for ObservationCreateView's template
+
+        This method is called by ObservationCreateView.get_context_data() and returns a
+        dictionary of context data to be added to the View's context
+        """
+        facility_context_data = super().get_facility_context_data(**kwargs)
+        new_context_data = {
+            'version': __version__,  # from tom_tl/__init__.py
+        }
+
+        facility_context_data.update(new_context_data)
+        return facility_context_data
 
     def submit_observation(self, observation_payload):
         if (LT_SETTINGS['DEBUG']):
