@@ -2,8 +2,6 @@ import time
 
 from lxml import etree
 from suds import Client
-from dateutil.parser import parse
-from datetime import datetime
 
 from django import forms
 from django.conf import settings
@@ -177,10 +175,12 @@ class LTObservationForm(BaseRoboticObservationForm):
 
 
 class LT_IOO_ObservationForm(LTObservationForm):
-    binning = forms.ChoiceField(choices=[('1x1', '1x1'), ('2x2', '2x2')], initial=('2x2', '2x2'),
-                                help_text='2x2 binning is usual, giving 0.3 arcsec/pixel, \
-                                faster readout and lower readout noise. 1x1 binning should \
-                                only be selected if specifically required.')
+    binning = forms.ChoiceField(
+        choices=[('1x1', '1x1'), ('2x2', '2x2')],
+        initial=('2x2', '2x2'),
+        help_text='2x2 binning is usual, giving 0.3 arcsec/pixel, \
+                   faster readout and lower readout noise. 1x1 binning should \
+                   only be selected if specifically required.')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -430,7 +430,7 @@ class LTFacility(BaseRoboticObservationFacility):
 
     SITES = {
             'La Palma': {
-                'sitecode': 'orm',
+                'sitecode': 'orm',  # TODO: what does this mean? and document it.
                 'latitude': 28.762,
                 'longitude': -17.872,
                 'elevation': 2363}
@@ -449,7 +449,7 @@ class LTFacility(BaseRoboticObservationFacility):
             return LT_IOO_ObservationForm
 
     def submit_observation(self, observation_payload):
-        if(LT_SETTINGS['DEBUG']):
+        if (LT_SETTINGS['DEBUG']):
             payload = etree.fromstring(observation_payload)
             f = open("created.rtml", "w")
             f.write(etree.tostring(payload, encoding="unicode", pretty_print=True))
@@ -478,7 +478,7 @@ class LTFacility(BaseRoboticObservationFacility):
         payload.append(form._build_project())
 
     def validate_observation(self, observation_payload):
-        if(LT_SETTINGS['DEBUG']):
+        if (LT_SETTINGS['DEBUG']):
             return []
         else:
             headers = {
