@@ -15,6 +15,10 @@ from crispy_forms.bootstrap import PrependedAppendedText, PrependedText, InlineR
 from tom_observations.facility import BaseRoboticObservationForm, BaseRoboticObservationFacility
 from tom_targets.models import Target
 
+from tom_lt import __version__
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 try:
     LT_SETTINGS = settings.FACILITIES['LT']
@@ -65,7 +69,8 @@ class LTObservationForm(BaseRoboticObservationForm):
             self.common_layout,
             self.layout(),
             self.extra_layout(),
-            self.button_layout()
+            self.button_layout(),
+            self.version_layout(),
         )
 
     def is_valid(self):
@@ -106,6 +111,12 @@ class LTObservationForm(BaseRoboticObservationForm):
             HTML('<hr width="85%"><h4>Instrument Config</h4>'),
             css_class='form-row'
         )
+
+    def version_layout(self):
+        return Div(HTML('<hr>'
+                        '<em><a href="http://telescope.livjm.ac.uk" target="_blank">Liverpool Telescope</a>'
+                        ' Facility module v{{version}}</em>'
+                        ))
 
     def extra_layout(self):
         return Div()
