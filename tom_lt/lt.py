@@ -543,8 +543,8 @@ class LTFacility(BaseRoboticObservationFacility):
             # Send payload, and receive response string, removing the encoding tag which causes issue with lxml parsing
             try:
                 response = client.service.handle_rtml(validate_payload).replace('encoding="ISO-8859-1"', '')
-            except:
-                return ['Error with connection to Liverpool Telescope',
+            except Exception as e:
+                return [f'Error with connection to Liverpool Telescope: {e}',
                         'This could be due to incorrect credentials, or IP / Port settings',
                         'Occassionally, this could be due to the rebooting of systems at the Telescope Site',
                         'Please retry at another time.',
