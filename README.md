@@ -1,4 +1,4 @@
-# Liverpool Telescope facility module for the TOM Toolkit v0.4.0
+# Liverpool Telescope facility module for the TOM Toolkit
 
 
 ## Features
