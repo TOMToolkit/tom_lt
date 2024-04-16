@@ -1,9 +1,8 @@
+import logging
 import time
 
 from lxml import etree
 from suds import Client
-from dateutil.parser import parse
-from datetime import datetime
 
 from django import forms
 from django.conf import settings
@@ -17,6 +16,10 @@ from crispy_forms.bootstrap import PrependedAppendedText, PrependedText, InlineR
 from tom_observations.facility import BaseRoboticObservationForm, BaseRoboticObservationFacility
 from tom_targets.models import Target
 
+from tom_lt import __version__
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 try:
     LT_SETTINGS = settings.FACILITIES['LT']
@@ -67,7 +70,8 @@ class LTObservationForm(BaseRoboticObservationForm):
             self.common_layout,
             self.layout(),
             self.extra_layout(),
-            self.button_layout()
+            self.button_layout(),
+            self.version_layout(),
         )
 
     def is_valid(self):
@@ -108,6 +112,12 @@ class LTObservationForm(BaseRoboticObservationForm):
             HTML('<hr width="85%"><h4>Instrument Config</h4>'),
             css_class='form-row'
         )
+
+    def version_layout(self):
+        return Div(HTML('<hr>'
+                        '<em><a href="http://telescope.livjm.ac.uk" target="_blank">Liverpool Telescope</a>'
+                        ' Facility module v{{version}}</em>'
+                        ))
 
     def extra_layout(self):
         return Div()
@@ -177,10 +187,12 @@ class LTObservationForm(BaseRoboticObservationForm):
 
 
 class LT_IOO_ObservationForm(LTObservationForm):
-    binning = forms.ChoiceField(choices=[('1x1', '1x1'), ('2x2', '2x2')], initial=('2x2', '2x2'),
-                                help_text='2x2 binning is usual, giving 0.3 arcsec/pixel, \
-                                faster readout and lower readout noise. 1x1 binning should \
-                                only be selected if specifically required.')
+    binning = forms.ChoiceField(
+        choices=[('1x1', '1x1'), ('2x2', '2x2')],
+        initial=('2x2', '2x2'),
+        help_text='2x2 binning is usual, giving 0.3 arcsec/pixel, \
+                   faster readout and lower readout noise. 1x1 binning should \
+                   only be selected if specifically required.')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -428,28 +440,64 @@ class LTFacility(BaseRoboticObservationFacility):
     name = 'LT'
     observation_types = [('IOO', 'IO:O'), ('IOI', 'IO:I'), ('SPRAT', 'SPRAT'), ('FRODO', 'FRODOSpec')]
 
+    # observation_forms should be a dictionary
+    #  * it's .items() method is called in views.py::ObservationCreateView.get_context_data()
+    #  * the keys are the observation_types; values are the ObservationForm classes
+
+    # TODO: this (required) addition seems redudant to the get_form() method below.
+    # TODO: see how get_form() is used and if it's still required
+    observation_forms = {
+        'IOO': LT_IOO_ObservationForm,
+        'IOI': LT_IOI_ObservationForm,
+        'SPRAT': LT_SPRAT_ObservationForm,
+        'FRODO': LT_FRODO_ObservationForm
+    }
+
     SITES = {
             'La Palma': {
-                'sitecode': 'orm',
+                'sitecode': 'orm',  # TODO: what does this mean? and document it.
                 'latitude': 28.762,
                 'longitude': -17.872,
                 'elevation': 2363}
             }
 
     def get_form(self, observation_type):
-        if observation_type == 'IOO':
-            return LT_IOO_ObservationForm
-        elif observation_type == 'IOI':
-            return LT_IOI_ObservationForm
-        elif observation_type == 'SPRAT':
-            return LT_SPRAT_ObservationForm
-        elif observation_type == 'FRODO':
-            return LT_FRODO_ObservationForm
-        else:
-            return LT_IOO_ObservationForm
+        """
+        """
+        try:
+            return self.observation_forms[observation_type]
+        except KeyError:
+            return self.observation_forms['IOO']
+        # This is the original implementation of this method below.
+        # I've rewritten it to use the observation_forms dictionary above.
+        #
+        # if observation_type == 'IOO':
+        #     return LT_IOO_ObservationForm
+        # elif observation_type == 'IOI':
+        #     return LT_IOI_ObservationForm
+        # elif observation_type == 'SPRAT':
+        #     return LT_SPRAT_ObservationForm
+        # elif observation_type == 'FRODO':
+        #     return LT_FRODO_ObservationForm
+        # else:
+        #     return LT_IOO_ObservationForm
+
+    def get_facility_context_data(self, **kwargs):
+        """Provide Facility-specific data to context for ObservationCreateView's template
+
+        This method is called by ObservationCreateView.get_context_data() and returns a
+        dictionary of context data to be added to the View's context
+        """
+        facility_context_data = super().get_facility_context_data(**kwargs)
+        new_context_data = {
+            'version': __version__,  # from tom_tl/__init__.py
+        }
+
+        facility_context_data.update(new_context_data)
+        return facility_context_data
 
     def submit_observation(self, observation_payload):
-        if(LT_SETTINGS['DEBUG']):
+        if (LT_SETTINGS['DEBUG']):
             payload = etree.fromstring(observation_payload)
             f = open("created.rtml", "w")
             f.write(etree.tostring(payload, encoding="unicode", pretty_print=True))
@@ -478,7 +526,7 @@ class LTFacility(BaseRoboticObservationFacility):
         payload.append(form._build_project())
 
     def validate_observation(self, observation_payload):
-        if(LT_SETTINGS['DEBUG']):
+        if (LT_SETTINGS['DEBUG']):
             return []
         else:
             headers = {
@@ -495,8 +543,8 @@ class LTFacility(BaseRoboticObservationFacility):
             # Send payload, and receive response string, removing the encoding tag which causes issue with lxml parsing
             try:
                 response = client.service.handle_rtml(validate_payload).replace('encoding="ISO-8859-1"', '')
-            except:
-                return ['Error with connection to Liverpool Telescope',
+            except Exception as e:
+                return [f'Error with connection to Liverpool Telescope: {e}',
                         'This could be due to incorrect credentials, or IP / Port settings',
                         'Occassionally, this could be due to the rebooting of systems at the Telescope Site',
                         'Please retry at another time.',
