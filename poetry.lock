@@ -2109,17 +2109,17 @@ doc = ["reno", "sphinx", "tornado (>=4.5)"]
 
 [[package]]
 name = "tomtoolkit"
-version = "2.18.2"
+version = "2.19.4"
 description = "TOM Toolkit and base modules"
 optional = false
 python-versions = "<3.12,>=3.8.1"
 files = [
-    {file = "tomtoolkit-2.18.2-py3-none-any.whl", hash = "sha256:a3fb5af76334483c03697a59fabb489383b6c68cdbdb9ffbc23a7557463ddd38"},
-    {file = "tomtoolkit-2.18.2.tar.gz", hash = "sha256:9fd29a227655b7b34f130c8d4a07741e21a2a4304f3df42f4bc1a50cd5489065"},
+    {file = "tomtoolkit-2.19.4-py3-none-any.whl", hash = "sha256:1ed35660e455cb20410500926ecdf5f86335c868b3f05360eb404351874e2c9a"},
+    {file = "tomtoolkit-2.19.4.tar.gz", hash = "sha256:34587e04008d9d046a90860d36f2ec731d4ef2f437fca75cde7f848a048a4c7d"},
 ]
 
 [package.dependencies]
-astroplan = ">=0.8,<0.10"
+astroplan = ">=0.8,<0.11"
 astropy = [
     {version = ">=5.3.3,<6", markers = "python_version < \"3.12\" and python_version >= \"3.9\""},
     {version = ">=3,<6", markers = "python_version < \"3.9\""},
@@ -2136,7 +2136,7 @@ django-extensions = ">=3,<4"
 django-filter = ">=23,<25"
 django-gravatar2 = ">=1,<2"
 django-guardian = ">=2,<3"
-djangorestframework = "<4"
+djangorestframework = ">=3.15,<4"
 dramatiq = {version = "<2.0.0", extras = ["redis", "watch"]}
 fits2image = ">=0.4,<0.5"
 markdown = "<4"
