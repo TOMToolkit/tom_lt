@@ -11,7 +11,7 @@ from astropy.coordinates import SkyCoord
 from astropy import units as u
 
 from crispy_forms.layout import Layout, Div, HTML
-from crispy_forms.bootstrap import PrependedAppendedText, PrependedText, InlineRadios
+from crispy_forms.bootstrap import PrependedAppendedText, PrependedText
 
 from tom_observations.facility import BaseRoboticObservationForm, BaseRoboticObservationFacility
 from tom_targets.models import Target
@@ -104,7 +104,7 @@ class LTObservationForm(BaseRoboticObservationForm):
                     PrependedText('max_airmass', 'Airmass <'),
                     PrependedAppendedText('max_seeing', 'Seeing <', 'arcsec'),
                     PrependedAppendedText('max_skybri', 'Dark + ', 'mag/arcsec\xB2'),
-                    InlineRadios('photometric'),
+                    'photometric',
                     css_class='col-md-8'
                 ),
                 css_class='form-row'
