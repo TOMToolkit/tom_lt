@@ -15,7 +15,7 @@ packages = [{include = "tom_lt"}]
 python = ">=3.8.1,<3.12"
 tomtoolkit = ">=2.15"
 suds-py3 = "~1.4"
-lxml = "~5.2"
+lxml = ">=5.2,<5.4"
 
 [tool.poetry.group.lint.dependencies]
 flake8 = ">=7.0,<7.2"
