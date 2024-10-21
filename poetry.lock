@@ -783,6 +783,21 @@ files = [
 Django = ">=2.2"
 
 [[package]]
+name = "django-htmx"
+version = "1.19.0"
+description = "Extensions for using Django with htmx."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django_htmx-1.19.0-py3-none-any.whl", hash = "sha256:875a642814e52278c1728842436beda2001847a493ab79fd82da3fb46ead140f"},
+    {file = "django_htmx-1.19.0.tar.gz", hash = "sha256:e7e17304e78e07f96eca0affc3ce1806edfdf3538bb7cb1912452b101f3e627d"},
+]
+
+[package.dependencies]
+asgiref = ">=3.6"
+django = ">=3.2"
+
+[[package]]
 name = "djangorestframework"
 version = "3.15.2"
 description = "Web APIs for Django, made easy."
@@ -2087,13 +2102,13 @@ doc = ["reno", "sphinx", "tornado (>=4.5)"]
 
 [[package]]
 name = "tomtoolkit"
-version = "2.19.4"
+version = "2.20.0"
 description = "TOM Toolkit and base modules"
 optional = false
 python-versions = "<3.12,>=3.8.1"
 files = [
-    {file = "tomtoolkit-2.19.4-py3-none-any.whl", hash = "sha256:1ed35660e455cb20410500926ecdf5f86335c868b3f05360eb404351874e2c9a"},
-    {file = "tomtoolkit-2.19.4.tar.gz", hash = "sha256:34587e04008d9d046a90860d36f2ec731d4ef2f437fca75cde7f848a048a4c7d"},
+    {file = "tomtoolkit-2.20.0-py3-none-any.whl", hash = "sha256:bbe341ce102a99f2b95150be8900541e91839e66d1c90c86990b66a076d6669d"},
+    {file = "tomtoolkit-2.20.0.tar.gz", hash = "sha256:d9cca61fa8f82bad202fc8090c04679d74ebe4ca8700b349984b3fd45dcad4fe"},
 ]
 
 [package.dependencies]
@@ -2104,7 +2119,7 @@ astropy = [
 ]
 astroquery = "<1"
 beautifulsoup4 = "<5"
-crispy-bootstrap4 = ">=2023.1,<2024.2"
+crispy-bootstrap4 = ">=2023.1,<2024.11"
 django = "<5"
 django-bootstrap4 = ">3,<25"
 django-contrib-comments = ">=2.0,<3.0"
@@ -2114,6 +2129,7 @@ django-extensions = ">=3,<4"
 django-filter = ">=23,<25"
 django-gravatar2 = ">=1,<2"
 django-guardian = ">=2,<3"
+django-htmx = ">=1,<2"
 djangorestframework = ">=3.15,<4"
 dramatiq = {version = "<2.0.0", extras = ["redis", "watch"]}
 fits2image = ">=0.4,<0.5"
