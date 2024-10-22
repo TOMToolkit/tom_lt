@@ -99,13 +99,12 @@ class LTObservationForm(BaseRoboticObservationForm):
                 css_class='col-md-16'
             ),
             Div(
-                Div(css_class='col-md-2'),
                 Div(
                     PrependedText('max_airmass', 'Airmass <'),
                     PrependedAppendedText('max_seeing', 'Seeing <', 'arcsec'),
                     PrependedAppendedText('max_skybri', 'Dark + ', 'mag/arcsec\xB2'),
                     'photometric',
-                    css_class='col-md-8'
+                    css_class='col-md-16'
                 ),
                 css_class='form-row'
             ),
@@ -242,7 +241,7 @@ class LT_IOO_ObservationForm(LTObservationForm):
                         'exp_count_R',
                         'exp_count_I',
                         'exp_count_Z',
-                        css_class='col-md-6'),
+                        css_class='col-md-4'),
                     css_class='form-row'
                 ),
                 Div(HTML('<br><h5>Bessell</h5>'), css_class='form_row'),
@@ -253,7 +252,7 @@ class LT_IOO_ObservationForm(LTObservationForm):
 
                     Div('exp_count_B',
                         'exp_count_V',
-                        css_class='col-md-6'),
+                        css_class='col-md-4'),
                     css_class='form-row'
                 ),
                 Div(HTML('<br><h5>H-alpha</h5>'), css_class='form_row'),
@@ -271,16 +270,13 @@ class LT_IOO_ObservationForm(LTObservationForm):
                         'exp_count_Halpha6705',
                         'exp_count_Halpha6755',
                         'exp_count_Halpha6822',
-                        css_class='col-md-6'),
+                        css_class='col-md-4'),
                     css_class='form-row'
                     ),
-                css_class='col-md-6'
+                css_class='col-md-10'
             ),
             Div(css_class='col-md-1'),
-            Div(
-                Div('binning', css_class='col-md-6'),
-                css_class='col'
-            ),
+            Div('binning', css_class='col-md-6'),
             css_class='form-row'
         )
 
@@ -323,10 +319,10 @@ class LT_IOI_ObservationForm(LTObservationForm):
             Div(
                 Div(
                     Div(PrependedAppendedText('exp_time', 'H', 's'), css_class='col-md-6'),
-                    Div('exp_count', css_class='col-md-6'),
+                    Div('exp_count', css_class='col-md-4'),
                     css_class='form-row'
                 ),
-                css_class='col-md-6'
+                css_class='col-md-10'
             ),
             Div(css_class='col-md-5'),
 
@@ -363,11 +359,17 @@ class LT_SPRAT_ObservationForm(LTObservationForm):
 
     def extra_layout(self):
         return Div(
-                    Div(PrependedAppendedText('exp_time', 'SPRAT', 's'), css_class='col'),
-                    Div('exp_count', css_class='col'),
-                    Div('grating', css_class='col'),
+                    Div(
+                        Div(
+                            Div(PrependedAppendedText('exp_time', 'SPRAT', 's'), css_class='col-md-8'),
+                            Div('exp_count', css_class='col-md-4'),
+                            css_class='form-row'
+                        ),
+                        css_class='col-md-10'
+                    ),
+                    Div('grating', css_class='col-md-10'),
                     css_class='form-row'
-                    )
+                )
 
     def _build_inst_schedule(self, payload):
         exp_time = self.cleaned_data['exp_time']
@@ -406,9 +408,9 @@ class LT_FRODO_ObservationForm(LTObservationForm):
         return Div(
                     Div(PrependedAppendedText('exp_time_blue', 'Blue Arm', 's'),
                         PrependedAppendedText('exp_time_red', 'Red Arm', 's'),
-                        css_class='col'),
-                    Div('exp_count_blue', 'exp_count_red', css_class='col'),
-                    Div('res_blue', 'res_red', css_class='col'),
+                        css_class='col-md-6'),
+                    Div('exp_count_blue', 'exp_count_red', css_class='col-md-4'),
+                    Div('res_blue', 'res_red', css_class='col-md-2'),
                     css_class='form-row'
         )
 
