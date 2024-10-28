@@ -2102,13 +2102,13 @@ doc = ["reno", "sphinx", "tornado (>=4.5)"]
 
 [[package]]
 name = "tomtoolkit"
-version = "2.20.0"
+version = "2.20.1"
 description = "TOM Toolkit and base modules"
 optional = false
 python-versions = "<3.12,>=3.8.1"
 files = [
-    {file = "tomtoolkit-2.20.0-py3-none-any.whl", hash = "sha256:bbe341ce102a99f2b95150be8900541e91839e66d1c90c86990b66a076d6669d"},
-    {file = "tomtoolkit-2.20.0.tar.gz", hash = "sha256:d9cca61fa8f82bad202fc8090c04679d74ebe4ca8700b349984b3fd45dcad4fe"},
+    {file = "tomtoolkit-2.20.1-py3-none-any.whl", hash = "sha256:5b116ef9ee6a1aaee8c704b96ed28e5523310d8840f4a8490496fe5b5e280e37"},
+    {file = "tomtoolkit-2.20.1.tar.gz", hash = "sha256:8af73d8350b7a29a5134538eb61afe6cdf47e61765bbe8f5c60dd29ab932b98e"},
 ]
 
 [package.dependencies]
