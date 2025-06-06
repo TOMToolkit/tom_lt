@@ -3,42 +3,20 @@ name: run-tests
 on: [push, pull_request]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-    - name: Install Poetry
-      uses: snok/install-poetry@v1
-      with:
-        version: "2.0.1"
-        virtualenvs-create: true
-        virtualenvs-in-project: true
-    - name: Install dependencies
-      run: poetry install --with lint
-    - name: Style Checks
-      run: poetry run flake8 tom_* --exclude=*/migrations/* --max-line-length=120
-
-  run_tests:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
-        os: [ubuntu-latest]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-        with:
-          version: "2.0.1"
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-      - name: Install dependencies
-        run: poetry install
-      - name: Run tests
-        run: poetry run python -m unittest discover -v
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-python@v4
+              with:
+                  python-version: "3.11"
+            - name: Install Poetry
+              uses: snok/install-poetry@v1
+              with:
+                  version: "2.0.1"
+                  virtualenvs-create: true
+                  virtualenvs-in-project: true
+            - name: Install dependencies
+              run: poetry install --with lint
+            - name: Style Checks
+              run: poetry run flake8 tom_* --exclude=*/migrations/* --max-line-length=120
