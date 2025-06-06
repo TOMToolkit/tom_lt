@@ -24,7 +24,7 @@ delete observations, users will need to log in and use the current Phase 2 tool.
 - Automatic Autoguider usage setting based on exposure time
 - Automatic Target Acquisition for SPRAT and FRODOspec instruments
 - Paralactic Angled slit orientation for SPRAT
-- Automantic Xe Arc calibration frame for SPRAT
+- Automatic Xe Arc calibration frame for SPRAT
 
 
 #### Unsupported functionality
@@ -33,10 +33,10 @@ delete observations, users will need to log in and use the current Phase 2 tool.
 - Performing multiple instrument observations in one scheduled Group
 - Defocussing or manual dither / offset patterns
 - Manual Cassegrain rotation to achieve specific sky angles
-- More specific aquisition routines for SPRAT or FRODOspec
+- More specific acquisition routines for SPRAT or FRODOspec
 
 
-#### Future extentions to the module will enable, in order of planned implementation;
+#### Future extensions to the module will enable, in order of planned implementation;
 - Cancelling of previously submitted observations
 - Checking of an observations status and whether dataproducts are ready
 - Ability to pull dataproducts directly into the TOMToolkit for reduction
@@ -44,11 +44,46 @@ delete observations, users will need to log in and use the current Phase 2 tool.
 
 ## Installation and Setup:
 
-Install the module into your TOM environment:
+### Requirements
+
+- Python ≥ 3.8.1, < 3.13
+- Poetry ≥ 2.0 (for development)
+- TOM Toolkit ≥ 2.15
+
+### Installation
+
+#### For Users
+
+Install the module into your TOM environment using pip:
 
 ```shell
 pip install tom-lt
 ```
+
+#### For Development
+
+This project uses Poetry 2.0 for dependency management. First, ensure you have Poetry 2.0 installed:
+
+```shell
+# Install Poetry 2.0 using pipx (recommended)
+pipx install poetry
+
+# Or upgrade existing Poetry installation
+pipx upgrade poetry
+
+# Verify version
+poetry --version
+```
+
+Clone the repository and install dependencies:
+
+```shell
+git clone https://github.com/your-org/tom-lt.git
+cd tom-lt
+poetry install --with lint
+```
+
+For more details on upgrading to Poetry 2.0, see [POETRY_UPGRADE.md](POETRY_UPGRADE.md).
 
 Add `tom_lt.lt.LTFacility` to the `TOM_FACILITY_CLASSES` in your TOM's
 `settings.py`:
