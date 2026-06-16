@@ -86,15 +86,15 @@ class LTObservationForm(BaseRoboticObservationForm):
             Div(
                 Div(
                     'project',
-                    css_class='form-row'
+                    css_class='row'
                 ),
                 Div(
                     'startdate', 'starttime',
-                    css_class='form-row'
+                    css_class='row'
                 ),
                 Div(
                     'enddate', 'endtime',
-                    css_class='form-row'
+                    css_class='row'
                 ),
                 css_class='col-md-16'
             ),
@@ -106,10 +106,10 @@ class LTObservationForm(BaseRoboticObservationForm):
                     'photometric',
                     css_class='col-md-16'
                 ),
-                css_class='form-row'
+                css_class='row'
             ),
             HTML('<hr width="85%"><h4>Instrument Config</h4>'),
-            css_class='form-row'
+            css_class='row'
         )
 
     def version_layout(self):
@@ -227,7 +227,7 @@ class LT_IOO_ObservationForm(LTObservationForm):
     def extra_layout(self):
         return Div(
             Div(
-                Div(HTML('<br><h5>Sloan</h5>'), css_class='form_row'),
+                Div(HTML('<br><h5>Sloan</h5>'), css_class='row'),
                 Div(
                     Div(PrependedAppendedText('exp_time_U', 'u\'', 's'),
                         PrependedAppendedText('exp_time_G', 'g\'', 's'),
@@ -242,9 +242,9 @@ class LT_IOO_ObservationForm(LTObservationForm):
                         'exp_count_I',
                         'exp_count_Z',
                         css_class='col-md-4'),
-                    css_class='form-row'
+                    css_class='row'
                 ),
-                Div(HTML('<br><h5>Bessell</h5>'), css_class='form_row'),
+                Div(HTML('<br><h5>Bessell</h5>'), css_class='row'),
                 Div(
                     Div(PrependedAppendedText('exp_time_B', 'B', 's'),
                         PrependedAppendedText('exp_time_V', 'V', 's'),
@@ -253,9 +253,9 @@ class LT_IOO_ObservationForm(LTObservationForm):
                     Div('exp_count_B',
                         'exp_count_V',
                         css_class='col-md-4'),
-                    css_class='form-row'
+                    css_class='row'
                 ),
-                Div(HTML('<br><h5>H-alpha</h5>'), css_class='form_row'),
+                Div(HTML('<br><h5>H-alpha</h5>'), css_class='row'),
 
                 Div(
                     Div(PrependedAppendedText('exp_time_Halpha6566', '6566', 's'),
@@ -271,13 +271,13 @@ class LT_IOO_ObservationForm(LTObservationForm):
                         'exp_count_Halpha6755',
                         'exp_count_Halpha6822',
                         css_class='col-md-4'),
-                    css_class='form-row'
+                    css_class='row'
                     ),
                 css_class='col-md-10'
             ),
             Div(css_class='col-md-1'),
             Div('binning', css_class='col-md-6'),
-            css_class='form-row'
+            css_class='row'
         )
 
     def _build_inst_schedule(self, payload):
@@ -320,13 +320,13 @@ class LT_IOI_ObservationForm(LTObservationForm):
                 Div(
                     Div(PrependedAppendedText('exp_time', 'H', 's'), css_class='col-md-6'),
                     Div('exp_count', css_class='col-md-4'),
-                    css_class='form-row'
+                    css_class='row'
                 ),
                 css_class='col-md-10'
             ),
             Div(css_class='col-md-5'),
 
-            css_class='form-row'
+            css_class='row'
         )
 
     def _build_inst_schedule(self, payload):
@@ -363,12 +363,12 @@ class LT_SPRAT_ObservationForm(LTObservationForm):
                         Div(
                             Div(PrependedAppendedText('exp_time', 'SPRAT', 's'), css_class='col-md-8'),
                             Div('exp_count', css_class='col-md-4'),
-                            css_class='form-row'
+                            css_class='row'
                         ),
                         css_class='col-md-10'
                     ),
                     Div('grating', css_class='col-md-10'),
-                    css_class='form-row'
+                    css_class='row'
                 )
 
     def _build_inst_schedule(self, payload):
@@ -411,7 +411,7 @@ class LT_FRODO_ObservationForm(LTObservationForm):
                         css_class='col-md-6'),
                     Div('exp_count_blue', 'exp_count_red', css_class='col-md-4'),
                     Div('res_blue', 'res_red', css_class='col-md-2'),
-                    css_class='form-row'
+                    css_class='row'
         )
 
     def _build_inst_schedule(self, payload):
