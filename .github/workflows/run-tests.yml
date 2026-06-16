@@ -9,21 +9,37 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
-        python-version: '3.11'
+        python-version: '3.12'
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install poetry
+        python -m pip install "poetry>=2.0,<3.0"
         poetry install --with lint
     - name: Style Checks
       run: poetry run flake8 tom_* --exclude=*/migrations/* --max-line-length=120
+
+  check_migrations:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: "3.12"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install "poetry>=2.0,<3.0"
+        poetry install
+    - name: Missing Migrations
+      run: |
+        poetry run python tom_lt/tests/check_migrations.py
 
   run_tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
-        os: [ubuntu-latest]
+        python-version: ['3.10', '3.11', "3.12", "3.13"]
+        os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -32,7 +48,27 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install poetry
-          poetry install
-      - name: Run tests
-        run: poetry run python -m unittest discover -v
+          python -m pip install "poetry>=2.0,<3.0"
+          poetry env info  # display poetry's env info for debugging
+          poetry install  --with test
+      - name: Run Tests
+        run: poetry run python tom_lt/tests/run_tests.py
+
+  publish_coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.12
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install "poetry>=2.0,<3.0"
+          poetry install --with coverage,lint
+      - name: Run Tests
+        run: poetry run coverage run --include=tom_lt/lt.py tom_lt/tests/run_tests.py
+      - name: Report Coverage
+        run: poetry run coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
