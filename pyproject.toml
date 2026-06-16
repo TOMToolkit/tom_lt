@@ -1,24 +1,69 @@
-[tool.poetry]
+[project]
 name = "tom-lt"
-# this version is a placeholder: version supplied by poetry-dynamic-versioning
-version = "0.0.0"
 description = "TOM Toolkit Facility module for the Liverpool Telescope"
 authors = [
-    "Doug Arnold <d.m.arnold@ljmu.ac.uk>",
-    "David Collom <dmcollom@gmail.com>",
-    "Lindy Lindstrom <llindstrom@lco.global>"]
+    {name = "Doug Arnold", email = "d.m.arnold@ljmu.ac.uk"},
+    {name = "David Collom", email = "dmcollom@gmail.com>"},
+    {name = "Lindy Lindstrom", email = "llindstrom@lco.global"}
+]
+maintainers = [
+    {name = "Joey Chatelain", email = "jchate6@gmail.com"},
+    {name = "William Lindstrom", email = "llindstrom@lco.global"},
+    {name = "Rachel Street", email = "rstreet@lco.global"},
+    {name = "Doug Arnold", email = "<d.m.arnold@ljmu.ac.uk>"},
+]
 license = "GPL-3.0-or-later"
 readme = "README.md"
-packages = [{include = "tom_lt"}]
+homepage = "https://lco.global/tomtoolkit/"
+repository = "https://github.com/TOMToolkit/tom_base"
+documentation = "https://tom-toolkit.readthedocs.io/en/latest/"
 
-[tool.poetry.dependencies]
-python = ">=3.8.1,<3.12"
-tomtoolkit = ">=2.15"
-suds-py3 = "~1.4"
-lxml = ">=5.2,<5.4"
+keywords = [
+    'tomtoolkit',
+    'TOM',
+    'astronomy',
+    'astrophysics',
+    'cosmology',
+    'science',
+    'fits',
+    'observatory',
+]
+classifiers = [
+    'Development Status :: 3 - Alpha',
+    'Intended Audience :: Science/Research',
+    'License :: OSI Approved :: BSD License',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Topic :: Scientific/Engineering :: Astronomy',
+    'Topic :: Scientific/Engineering :: Physics'
+]
+
+dynamic = ["version"]
+requires-python = ">=3.10.0,<3.14"
+dependencies = [
+    "tomtoolkit>=3.0.0a0",
+    "suds-py3~=1.4",
+    "lxml>=5.2,<5.4"
+]
+
+# this version is a placeholder: version supplied by poetry-dynamic-versioning
+[tool.poetry]
+version = "0.0.0"
+
+[tool.poetry.group.test.dependencies]
+factory_boy = ">3.2.1,<3.4"
+
+[tool.poetry.group.coverage.dependencies]
+coverage = ">=6,<8" # coveralls needs ~6 even though 7.3.2 is latest
+coveralls = ">=3,<5"
 
 [tool.poetry.group.lint.dependencies]
 flake8 = ">=7.0,<7.2"
+
+[tool.poetry.requires-plugins]
+poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = ["plugin"] }
 
 [tool.poetry-dynamic-versioning]
 enable = true
@@ -33,8 +78,6 @@ pattern = "(?x)^[v]?((?P<epoch>\\d+)!)?(?P<base>\\d+(\\.\\d+)*)([-._]?((?P<stage
 # but also the __version__.py file
 [tool.poetry-dynamic-versioning.substitution]
 
-
 [build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+requires = ["poetry-core>=2.0.0, <3.0.0", "poetry-dynamic-versioning >=0.22.0"]
 build-backend = "poetry_dynamic_versioning.backend"
-# poetry_dynamic_versioning.backend is a thin wrapper around the standard build-backend = "poetry.core.masonry.api"
