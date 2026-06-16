@@ -53,22 +53,3 @@ jobs:
           poetry install  --with test
       - name: Run Tests
         run: poetry run python tom_lt/tests/run_tests.py
-
-  publish_coverage:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.12
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip setuptools wheel
-          python -m pip install "poetry>=2.0,<3.0"
-          poetry install --with coverage,lint
-      - name: Run Tests
-        run: poetry run coverage run --include=tom_lt/lt.py tom_lt/tests/run_tests.py
-      - name: Report Coverage
-        run: poetry run coveralls
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
