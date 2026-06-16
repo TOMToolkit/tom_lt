@@ -2,7 +2,9 @@
 name = "tom-lt"
 description = "TOM Toolkit Facility module for the Liverpool Telescope"
 authors = [
-    {name = "TOM Toolkit Project", email = "tomtoolkit-maintainers@lco.global"},
+    {name = "Doug Arnold", email = "d.m.arnold@ljmu.ac.uk"},
+    {name = "David Collom", email = "dmcollom@gmail.com>"},
+    {name = "Lindy Lindstrom", email = "llindstrom@lco.global"}
 ]
 maintainers = [
     {name = "Joey Chatelain", email = "jchate6@gmail.com"},
@@ -15,6 +17,7 @@ readme = "README.md"
 homepage = "https://lco.global/tomtoolkit/"
 repository = "https://github.com/TOMToolkit/tom_base"
 documentation = "https://tom-toolkit.readthedocs.io/en/latest/"
+
 keywords = [
     'tomtoolkit',
     'TOM',
@@ -49,8 +52,15 @@ dependencies = [
 ]
 
 # this version is a placeholder: version supplied by poetry-dynamic-versioning
+[tool.poetry]
 version = "0.0.0"
 
+[tool.poetry.group.test.dependencies]
+factory_boy = ">3.2.1,<3.4"
+
+[tool.poetry.group.coverage.dependencies]
+coverage = ">=6,<8" # coveralls needs ~6 even though 7.3.2 is latest
+coveralls = ">=3,<5"
 
 [tool.poetry.group.lint.dependencies]
 flake8 = ">=7.0,<7.2"
@@ -72,5 +82,5 @@ pattern = "(?x)^[v]?((?P<epoch>\\d+)!)?(?P<base>\\d+(\\.\\d+)*)([-._]?((?P<stage
 [tool.poetry-dynamic-versioning.substitution]
 
 [build-system]
-requires = ["poetry-core>=2.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=2.0.0, <3.0.0", "poetry-dynamic-versioning >=0.22.0"]
+build-backend = "poetry_dynamic_versioning.backend"
