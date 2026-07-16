@@ -45,7 +45,7 @@ requires-python = ">=3.10.0,<3.14"
 dependencies = [
     "tomtoolkit>=3.0.0,<4.0.0",
     "suds-py3~=1.4",
-    "lxml>=5.2,<5.4"
+    "lxml>=6.1.0,<6.2"
 ]
 
 # this version is a placeholder: version supplied by poetry-dynamic-versioning
