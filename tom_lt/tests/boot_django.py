@@ -11,12 +11,14 @@ from tom_common.default_settings import TOMTOOKIT_INSTALLED_APPS, TOMTOOKIT_MIDD
 APP_NAME = 'tom_lt'  # the stand-alone app we are testing
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), APP_NAME))
+urlpatterns = []
 
 
 def boot_django():
     settings.configure(
         BASE_DIR=BASE_DIR,
         DEBUG=True,
+        ROOT_URLCONF=__name__,
         DATABASES={
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
